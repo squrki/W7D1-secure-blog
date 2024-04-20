@@ -12,7 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Database Connection
 CONNECTDB(process.env.MONGO_DB_URL);
-// CONNECTDB(`mongodb://localhost:27017`)
 
 // Routes
 app.use("/api/user", userRoute);

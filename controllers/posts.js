@@ -1,4 +1,5 @@
-const { Post } = require("../models/post");
+const Post = require("../models/post")
+const User = require("../models/user")
 
 // Class definition for the PostController
 class PostController {
@@ -14,7 +15,7 @@ class PostController {
             // Creating a new post with the provided title, user ID, and description
             const post = await Post.create({
                 title,
-                userId: req.user.id,
+                userId: req.user._id,
                 description,
             });
 
@@ -34,6 +35,7 @@ class PostController {
             const postId = req.params.id;
 
             // Implement deletion logic here
+            Post.deleteOne({ _id: req.params.id })
 
             // Sending a success response after successful deletion
             res.status(200).json({ message: 'Post deleted successfully' });
@@ -51,6 +53,8 @@ class PostController {
             const postId = req.params.id;
 
             // Implement update logic here
+            Post.findOneAndUpdate({ _id: postId }, req.body, { new: true })
+
 
             // Sending a success response after successful update
             res.status(200).json({ message: 'Post updated successfully' });
@@ -68,7 +72,13 @@ class PostController {
             const postId = req.params.id;
 
             // Implement retrieval logic here
-
+            Post.findById(postId)
+                .then(found => {
+                    res.status(200).json({
+                        message: 'Retrieved post by ID',
+                        found
+                    })
+                })
             // Sending a success response with the retrieved post
             res.status(200).json({ message: 'Retrieved post by ID' });
         } catch (error) {
@@ -85,6 +95,13 @@ class PostController {
             const userId = req.params.userId;
 
             // Implement retrieval logic here
+            User.findById(userId)
+                .then(found => {
+                    res.status(200).json({
+                        message: 'Retrieved post by ID',
+                        found
+                    })
+                })
 
             // Sending a success response with the retrieved posts
             res.status(200).json({ message: 'Retrieved posts by user ID' });
