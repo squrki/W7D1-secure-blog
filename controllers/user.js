@@ -1,6 +1,5 @@
 // controllers/user.js
 const User = require('../models/user')
-const { verifyToken } = require('../controllers/auth');
 const jwt = require('jsonwebtoken')
 
 // Function to handle user registration
